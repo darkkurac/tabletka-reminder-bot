@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Tabletka Reminder Bot database backup
+
+[Timer]
+OnCalendar=*-*-* 03:17:00
+Persistent=true
+RandomizedDelaySec=900
+Unit=tabletka-reminder-backup.service
+
+[Install]
+WantedBy=timers.target

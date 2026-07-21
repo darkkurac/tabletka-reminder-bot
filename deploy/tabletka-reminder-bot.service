@@ -1,0 +1,40 @@
+[Unit]
+Description=Tabletka Reminder Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=tabletka
+Group=tabletka
+WorkingDirectory=/opt/tabletka-reminder-bot
+EnvironmentFile=/etc/tabletka-reminder-bot.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStartPre=/opt/tabletka-reminder-bot/.venv/bin/python /opt/tabletka-reminder-bot/bot.py --check
+ExecStart=/opt/tabletka-reminder-bot/.venv/bin/python /opt/tabletka-reminder-bot/bot.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+LockPersonality=true
+ReadWritePaths=/var/lib/tabletka-reminder-bot
+MemoryMax=512M
+TasksMax=64
+LimitNOFILE=1024
+
+[Install]
+WantedBy=multi-user.target

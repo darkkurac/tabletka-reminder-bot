@@ -1,0 +1,27 @@
+[Unit]
+Description=Backup Tabletka Reminder Bot database
+ConditionPathExists=/var/lib/tabletka-reminder-bot/meds.sqlite3
+
+[Service]
+Type=oneshot
+User=tabletka
+Group=tabletka
+UMask=0077
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/tabletka-reminder-bot/.venv/bin/python /opt/tabletka-reminder-bot/scripts/backup_db.py --source /var/lib/tabletka-reminder-bot/meds.sqlite3 --destination /var/backups/tabletka-reminder-bot --retention-days 14
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX
+CapabilityBoundingSet=
+LockPersonality=true
+ReadWritePaths=/var/lib/tabletka-reminder-bot /var/backups/tabletka-reminder-bot
